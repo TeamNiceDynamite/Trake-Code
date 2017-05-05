@@ -1,9 +1,9 @@
-public class Board2
+public class Board
 {
     Position[] Board;
 
     //square constructor
-    Board2(int side)
+    Board(int side)
     {
         Board = new Position[side*side];
         int count = 0;
@@ -29,10 +29,10 @@ public class Board2
 
     public static void main(String args[])
     {
-        Board2 b1 = new Board2(2);
-        Board2 b2 = new Board2(3);
-        Board2 b3 = new Board2(4);
-        Board2 b4 = new Board2(5);
+        Board b1 = new Board(2);
+        Board b2 = new Board(3);
+        Board b3 = new Board(4);
+        Board b4 = new Board(5);
         System.out.println(b1);
         System.out.println(b2);
         System.out.println(b3);
