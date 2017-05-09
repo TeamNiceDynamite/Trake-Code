@@ -1,6 +1,6 @@
 public class gameLogic extends Thread
 {
-	Position snakeHeadPos;
+	Position snakeHead;
 	int snakeSize =;
 	long speed =;
 	public static int snakeDirection;
@@ -51,17 +51,23 @@ public class gameLogic extends Thread
 		}
 	}
 	private void moveInitiate(int dir)
-	{
+	{	//0 = right, 1 = up, 2 = left, 3 = down
 		switch(dir){
 			case 0:
-				headSnakePos.changePos(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
-				positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
+				headSnake.changePos(headSnake.x+1),headSnake.y);
+				positions.add(new Snake(headSnake.x,headSnake.y));
 				break;
 			case 1:
+				headSnake.changePos(headSnake.x,headSnake.y+1);
+				positions.add(new Snake(headSnake.x,headSnake.y));
 				break;
 			case 2:
+				headSnake.changePos(headSnake.x-1,headSnake.y);
+				positions.add(new Snake(headSnake.x,headSnake.y));
 				break;
 			case 3:
+				headSnake.changePos(headSnake.x,headSnake.y-1);
+				positions.add(new Snake(headSnake.x,headSnake.y));
 				break;
 			default:
 				break;
