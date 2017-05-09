@@ -49,5 +49,23 @@ public class gameLogic extends Thread
 			foodPosition = //get a random location not occupied;
 			spawnFood (foodPosition);
 		}
+	}
+	private void moveInitiate(int dir)
+	{
+		switch(dir){
+			case 0:
+				headSnakePos.ChangeData(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
+				positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			default:
+				break;
+		}
+	}
 }
 private void spawnFood
