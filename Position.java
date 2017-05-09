@@ -19,6 +19,12 @@ public class Position
         return myY;
     }
     
+    public void changePos(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+    
     public String toString()
     {
         String str = "";
