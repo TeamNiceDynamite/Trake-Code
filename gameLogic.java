@@ -1,6 +1,6 @@
 public class gameLogic extends Thread
 {
-	Snake snakeHeadPos;
+	Position snakeHeadPos;
 	int snakeSize =;
 	long speed =;
 	public static int snakeDirection;
@@ -54,7 +54,7 @@ public class gameLogic extends Thread
 	{
 		switch(dir){
 			case 0:
-				headSnakePos.ChangeData(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
+				headSnakePos.changePos(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
 				positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 				break;
 			case 1:
