@@ -6,7 +6,7 @@
  */
 public class Board
 {
-    // store strings as type, direction, player
+    // store strings as type, direction
     String[][] board;
     int x, y;
 
