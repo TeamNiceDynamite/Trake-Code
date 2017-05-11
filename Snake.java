@@ -9,19 +9,19 @@ public class Snake
     {
         if (player2)
         {
-            board.set(5,y/2,"head");
-            board.set(4,y/2,"body");
-            board.set(3,y/2,"body");
-            board.set(2,y/2,"tail");
+            board.set(5,y/2,"head right");
+            board.set(4,y/2,"body right");
+            board.set(3,y/2,"body right");
+            board.set(2,y/2,"tail right");
             direction = "right";
             player = 2;
         }
         else
         {
-            board.set(x-5,y/2,"head");
-            board.set(x-4,y/2,"body");
-            board.set(x-3,y/2,"body");
-            board.set(x-2,y/2,"tail");
+            board.set(x-5,y/2,"head left");
+            board.set(x-4,y/2,"body left");
+            board.set(x-3,y/2,"body left");
+            board.set(x-2,y/2,"tail left");
             direction = "left";
             player = 1;
         }
@@ -60,8 +60,8 @@ public class Snake
         return true;
     }
 
-    // actually move the snake head, remove tail
-    public void move()
+    // actually move the snake head
+    public void moveHead()
     {
         // move head if allowed
         int x, y;
@@ -71,34 +71,67 @@ public class Snake
         boolean legal = this.checkMove(x, y);
         if (legal)
         {
+            String headDir = board.getVal(x, y).substring(5);
             switch(direction)
             {
                 case "down":
-                board.getVal(x, y);
-                board.set(x, y, "body");
-                board.set(x, y-1, "down head");
+                board.set(x, y-1, "head down");
                 break;
                 case "up":
-                board.set(x, y, "body");
-                board.set(x, y-1, "up head");
+                board.set(x, y+1, "head up");
                 break;
                 case "right":
-                board.set(x, y, "body");
-                board.set(x+1, y, "right head");
+                board.set(x+1, y, "head right");
                 break;
                 case "left":
-                board.set(x, y, "body");
-                board.set(x-1, y, "left head");
+                board.set(x-1, y, "head left");
+                break;
+                default:
                 break;
             }
+            board.set(x, y, "body " + headDir);
         }
         else
         {
             this.lose();
         }
-        
+    }
+
+    public void removeTail()
+    {
         //remove tail
-        
+        int[] tail = board.getPos("tail");
+        int x = tail[0];
+        int y = tail[1];
+        String tailDir = board.getVal(x,y).substring(5);
+        String newTailDir;
+        switch (tailDir)
+        {
+            case "down":
+            newTailDir = board.getVal(x,y-1).substring(5);
+            board.set(x,y-1, "tail " + newTailDir);
+            break;
+            case "up":
+            newTailDir = board.getVal(x,y+1).substring(5);
+            board.set(x,y+1, "tail " + newTailDir);
+            break;
+            case "left":
+            newTailDir = board.getVal(x-1,y).substring(5);
+            board.set(x-1,y, "tail " + newTailDir);
+            break;
+            case "right":
+            newTailDir = board.getVal(x+1,y).substring(5);
+            board.set(x+1,y, "tail " + newTailDir);
+            break;
+            default:
+            break;
+        }
+        board.set(x,y,"bg");
+    }
+
+    public void grow(int size)
+    {
+        length += size;
     }
 
     public void lose()
