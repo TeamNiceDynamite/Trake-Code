@@ -55,23 +55,28 @@ public class gameLogic extends Thread
 		switch(dir){
 			case 0:
 				headSnake.changePos(headSnake.x+1),headSnake.y);
-				positions.add(new Snake(headSnake.x,headSnake.y));
 				break;
 			case 1:
 				headSnake.changePos(headSnake.x,headSnake.y+1);
-				positions.add(new Snake(headSnake.x,headSnake.y));
 				break;
 			case 2:
 				headSnake.changePos(headSnake.x-1,headSnake.y);
-				positions.add(new Snake(headSnake.x,headSnake.y));
 				break;
 			case 3:
 				headSnake.changePos(headSnake.x,headSnake.y-1);
-				positions.add(new Snake(headSnake.x,headSnake.y));
 				break;
 			default:
 				break;
 		}
+	}
+	
+	private void moveFinish()
+	{
+		
+	}
+	private void deleteTail()
+	{
+		
 	}
 }
 private void spawnFood
