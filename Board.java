@@ -6,26 +6,37 @@
  */
 public class Board
 {
-    String[][] Board;
+    // store strings as type, direction, player
+    String[][] board;
+    int x, y;
 
     public Board(int side)
     {
-        Board = new String[side][side];
+        board = new String[side][side];
         for (int i = 0; i < side; i++)
         {
             for (int j = 0; j < side; j++)
             {
-                Board[i][j] = "back";
+                if (i == 0 || i == side-1 || j == side-1 || j == 0)
+                {
+                    board[i][j] = "side";
+                }
+                else
+                {
+                    board[i][j] = "bg";
+                }
             }
         }
+        x = side;
+        y = side;
     }
-    
+
     public String toString()
     {
         String str = "";
         int count1 = 0;
         int count2 = 0;
-        for (String[] arr : Board)
+        for (String[] arr : board)
         {
             for (String s : arr)
             {
@@ -38,12 +49,35 @@ public class Board
         }
         return str;
     }
-    
+
     public void set(int x, int y, String val)
     {
-        Board[x][y] = val;
+        board[x][y] = val;
     }
-    
+
+    // sets variables x and y to current position of str
+    public int[] getPos(String str)
+    {
+        int[] arr = new int[2];
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                if (board[i][j].equals(str))
+                {
+                    arr[0] = i;
+                    arr[1] = j;
+                }
+            }
+        }
+        return arr;
+    }
+
+    public String getVal(int x, int y)
+    {
+        return board[x][y];
+    }
+
     public static void main(String args[])
     {
         Board b1 = new Board(2);
