@@ -1,18 +1,21 @@
+/**
+ * Write a description of class asdf here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
 public class Board
 {
-    Position[] Board;
+    String[][] Board;
 
-    //square constructor
-    Board(int side)
+    public Board(int side)
     {
-        Board = new Position[side*side];
-        int count = 0;
+        Board = new String[side][side];
         for (int i = 0; i < side; i++)
         {
             for (int j = 0; j < side; j++)
             {
-                Board[count] = new Position(i, j);
-                count++;
+                Board[i][j] = "back";
             }
         }
     }
@@ -20,13 +23,27 @@ public class Board
     public String toString()
     {
         String str = "";
-        for(Position p : Board)
+        int count1 = 0;
+        int count2 = 0;
+        for (String[] arr : Board)
         {
-            str += p + ", ";
+            for (String s : arr)
+            {
+                str += "(" + count1 + ", " + count2 + ")" + s + ", ";
+                count2 ++;
+            }
+            count1 ++;
+            count2 = 0;
+            str += "\n";
         }
         return str;
     }
-
+    
+    public void set(int x, int y, String val)
+    {
+        Board[x][y] = val;
+    }
+    
     public static void main(String args[])
     {
         Board b1 = new Board(2);
