@@ -73,5 +73,23 @@ public class gameLogic extends Thread
 				break;
 		}
 	}
+	private int[] findAvailable()
+	{	
+		int[] arr = new int[2];
+		while (true)
+		{
+			int randX = (int) Math.random()*side;
+			int randY = (int) Math.random()*side;
+			if (board[randX][randY].equals"bd")
+			{
+				arr[0] = randX;
+				arr[1] = randY;
+				return arr;
+			}
+		}
+	}
+		
+			
+		
 }
 private void spawnFood
