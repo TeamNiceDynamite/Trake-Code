@@ -61,13 +61,9 @@ public class Snake
     }
 
     // actually move the snake head
-    public void moveHead()
+    public void moveHead(int x, int y)
     {
         // move head if allowed
-        int x, y;
-        int[] head = board.getPos("head");
-        x = head[0];
-        y = head[1];
         boolean legal = this.checkMove(x, y);
         if (legal)
         {
@@ -132,6 +128,35 @@ public class Snake
     public void grow(int size)
     {
         length += size;
+    }
+
+    public void move()
+    {
+        int[] head = board.getPos("head");
+        int x = head[0];
+        int y = head[1];
+        boolean good = checkMove(x, y);
+        if (!good)
+        {
+            this.lose();
+        }
+        moveHead(x, y);
+        int bodyLen = 0;
+        for (int i = 0; i < board.getX(); i++)
+        {
+            for (int j = 0; j < board.getY(); j++)
+            {
+                if (board.getVal(i, j).substring(0,3).equals("body"))
+                {
+                    bodyLen++;
+                }
+            }
+        }
+        
+        if (bodyLen + 2 == length)
+        {
+            removeTail();
+        }
     }
 
     public void lose()
