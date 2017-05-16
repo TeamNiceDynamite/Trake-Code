@@ -25,8 +25,8 @@ public class Snake1 implements ActionListener, KeyListener
     public JFrame jframe;
 
     public Panel panel;
-
-    public Timer timer = new Timer(20, this);
+    public int speed = 40;
+    public Timer timer = new Timer(speed, this);
 
     public ArrayList<Point> snakeParts = new ArrayList<Point>();
 
@@ -34,7 +34,7 @@ public class Snake1 implements ActionListener, KeyListener
 
     public int ticks = 0, direction = DOWN, score, tailLength = 10, time;
 
-    public Point head, cherry, longer, shorter;
+    public Point head, cherry, longer, shorter, faster;
 
     public Random random;
 
@@ -77,6 +77,7 @@ public class Snake1 implements ActionListener, KeyListener
         cherry = new Point(random.nextInt(79), random.nextInt(66));
         longer = new Point(random.nextInt(79), random.nextInt(66));
         shorter = new Point(random.nextInt(79), random.nextInt(66));
+        faster = new Point(random.nextInt(79), random.nextInt(66));
         timer.start();
     }
 
@@ -151,15 +152,34 @@ public class Snake1 implements ActionListener, KeyListener
             {
                 if (head.equals(cherry))
                 {
+                    speed += 2;
                     score += 10;
                     tailLength+=2;
+                    timer.stop();
+                    timer.setDelay(speed);
+                    timer.start();
                     cherry.setLocation(random.nextInt(79), random.nextInt(66));
                 }
             }
             
             if (longer != null && head.equals(longer))
             {
+                if((speed += 10) > (speed *= 1.5))
+                {
+                    speed += 10;
+                }
+                else
+                {
+                    speed *= 1.5;
+                }
                 tailLength *= 2;
+                if(tailLength == 0)
+                {
+                    tailLength = 1;
+                }
+                 timer.stop();
+                 timer.setDelay(speed);
+                 timer.start();
                 longer.setLocation(random.nextInt(79), random.nextInt(66));
             }
 
@@ -168,6 +188,36 @@ public class Snake1 implements ActionListener, KeyListener
               tailLength /=2;
               shorter.setLocation(random.nextInt(79), random.nextInt(66));
             }
+            
+            if (faster != null && head.equals(faster))
+            {
+               
+               if(speed >=40)
+               {
+                   speed -= 10;
+               }
+               else if(speed >= 20)
+               {
+                   speed -= 5;
+               }
+               else if (speed >= 8)
+               {
+                    speed -= 2;
+               }
+               else if (speed <= 4)
+               {
+                   speed = 4;;
+               }
+
+            
+                
+               timer.stop();
+               timer.setDelay(speed);
+               timer.start();
+                
+               faster.setLocation(random.nextInt(79),random.nextInt(66));
+            }
+            
 
         }
     }
