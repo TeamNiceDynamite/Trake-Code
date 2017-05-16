@@ -47,6 +47,9 @@ public class Panel extends JPanel
 		g.setColor(Color.YELLOW);
 		g.fillRect(snake.shorter.x * Snake1.SCALE, snake.shorter.y * Snake1.SCALE, Snake1.SCALE, Snake1.SCALE);
 		
+		g.setColor(Color.BLUE);
+		g.fillRect(snake.faster.x * Snake1.SCALE, snake.faster.y * Snake1.SCALE, Snake1.SCALE, Snake1.SCALE);
+		
 		//score board display makes it white and in the middle
 		String string = "Score: " + snake.score + ", Length: " + snake.tailLength + ", Time: " + snake.time / 20;
 		g.setColor(Color.white);
