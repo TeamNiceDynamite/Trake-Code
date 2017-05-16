@@ -141,7 +141,7 @@ public class Snake1 implements ActionListener, KeyListener
                 }
             }
 
-            if (snakeParts.size() > tailLength)
+            while (snakeParts.size() > tailLength)
             {
                 snakeParts.remove(0);
 
