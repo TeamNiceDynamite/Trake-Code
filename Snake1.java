@@ -27,18 +27,19 @@ public class Snake1 implements ActionListener, KeyListener
     public Panel panel;
     public int speed = 40;
     public Timer timer = new Timer(speed, this);
+    public Timer timer2 = new Timer(5, this);
 
     public ArrayList<Point> snakeParts = new ArrayList<Point>();
 
     public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3, SCALE = 10;
 
-    public int ticks = 0, direction = DOWN, score, tailLength = 10, time;
+    public int ticks = 0, direction = DOWN, score, tailLength = 10, time, duration = 20;
 
-    public Point head, cherry, longer, shorter, faster;
+    public Point head, cherry, longer, shorter, faster, reverse;
 
     public Random random;
 
-    public boolean over = false, paused;
+    public boolean over = false, paused, reversed = false;
 
     public Dimension dim;
 
@@ -78,6 +79,7 @@ public class Snake1 implements ActionListener, KeyListener
         longer = new Point(random.nextInt(79), random.nextInt(66));
         shorter = new Point(random.nextInt(79), random.nextInt(66));
         faster = new Point(random.nextInt(79), random.nextInt(66));
+        reverse = new Point(random.nextInt(79), random.nextInt(66));
         timer.start();
     }
 
@@ -86,6 +88,15 @@ public class Snake1 implements ActionListener, KeyListener
     {
         panel.repaint();
         ticks++;
+        duration--;
+        if (duration <= 0)
+        {
+            duration = 0;
+            speed = 20;
+            timer.stop();
+            timer.setDelay(speed);
+            timer.start();
+        }
 
         if (ticks % 2 == 0 && head != null && !over && !paused)
         {
@@ -164,7 +175,7 @@ public class Snake1 implements ActionListener, KeyListener
             
             if (longer != null && head.equals(longer))
             {
-                if((speed += 10) > (speed *= 1.5))
+                /*if((speed += 10) > (speed *= 1.5))
                 {
                     speed += 10;
                 }
@@ -172,6 +183,7 @@ public class Snake1 implements ActionListener, KeyListener
                 {
                     speed *= 1.5;
                 }
+                */
                 tailLength *= 2;
                 if(tailLength == 0)
                 {
@@ -192,30 +204,19 @@ public class Snake1 implements ActionListener, KeyListener
             if (faster != null && head.equals(faster))
             {
                
-               if(speed >=40)
-               {
-                   speed -= 10;
-               }
-               else if(speed >= 20)
-               {
-                   speed -= 5;
-               }
-               else if (speed >= 8)
-               {
-                    speed -= 2;
-               }
-               else if (speed <= 4)
-               {
-                   speed = 4;;
-               }
-
-            
-                
+               speed = 4;
+               duration = 150;
                timer.stop();
                timer.setDelay(speed);
                timer.start();
                 
                faster.setLocation(random.nextInt(79),random.nextInt(66));
+            }
+            
+            if (reverse != null && head.equals(reverse))
+            {
+                reversed = !reversed;
+                reverse.setLocation(random.nextInt(79),random.nextInt(66));
             }
             
 
@@ -246,36 +247,78 @@ public class Snake1 implements ActionListener, KeyListener
     public void keyPressed(KeyEvent e)
     {
         int i = e.getKeyCode();
-
-        if ((i == KeyEvent.VK_A || i == KeyEvent.VK_LEFT) && direction != RIGHT)
+        if (i == KeyEvent.VK_F)
         {
-            direction = LEFT;
+            reversed = !reversed;
         }
-
-        if ((i == KeyEvent.VK_D || i == KeyEvent.VK_RIGHT) && direction != LEFT)
+        
+        if (reversed)
         {
-            direction = RIGHT;
-        }
 
-        if ((i == KeyEvent.VK_W || i == KeyEvent.VK_UP) && direction != DOWN)
-        {
-            direction = UP;
-        }
-
-        if ((i == KeyEvent.VK_S || i == KeyEvent.VK_DOWN) && direction != UP)
-        {
-            direction = DOWN;
-        }
-
-        if (i == KeyEvent.VK_SPACE)
-        {
-            if (over)
+            if ((i == KeyEvent.VK_A || i == KeyEvent.VK_LEFT) && direction != LEFT)
             {
-                startGame();
+                direction = RIGHT;
             }
-            else
+
+            if ((i == KeyEvent.VK_D || i == KeyEvent.VK_RIGHT) && direction != RIGHT)
             {
-                paused = !paused;
+                direction = LEFT;
+            }
+
+            if ((i == KeyEvent.VK_W || i == KeyEvent.VK_UP) && direction != UP)
+            {
+                direction = DOWN;
+            }
+
+            if ((i == KeyEvent.VK_S || i == KeyEvent.VK_DOWN) && direction != DOWN)
+            {
+                direction = UP;
+            }
+
+            if (i == KeyEvent.VK_SPACE)
+            {
+                if (over)
+                {
+                    startGame();
+                }
+                else
+                {
+                    paused = !paused;
+                }
+            }
+        }
+        else
+        {
+            if ((i == KeyEvent.VK_A || i == KeyEvent.VK_LEFT) && direction != RIGHT)
+            {
+                direction = LEFT;
+            }
+
+            if ((i == KeyEvent.VK_D || i == KeyEvent.VK_RIGHT) && direction != LEFT)
+            {
+                direction = RIGHT;
+            }
+
+            if ((i == KeyEvent.VK_W || i == KeyEvent.VK_UP) && direction != DOWN)
+            {
+                direction = UP;
+            }
+
+            if ((i == KeyEvent.VK_S || i == KeyEvent.VK_DOWN) && direction != UP)
+            {
+                direction = DOWN;
+            }
+
+            if (i == KeyEvent.VK_SPACE)
+            {
+                if (over)
+                {
+                    startGame();
+                }
+                else
+                {
+                    paused = !paused;
+                }
             }
         }
     }
