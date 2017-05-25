@@ -33,7 +33,7 @@ public class Snake1 implements ActionListener, KeyListener
 
     public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3, SCALE = 10;
 
-    public int ticks = 0, direction = DOWN, score, tailLength = 10, time, duration = 20;
+    public int ticks = 0, direction = DOWN, score, scoreMultiplier = 1, fastMultiplier = 1, tailLength = 10, time, duration = 20;
 
     public Point head, cherry, longer, shorter, faster, reverse;
 
@@ -93,6 +93,11 @@ public class Snake1 implements ActionListener, KeyListener
         {
             duration = 0;
             speed = 20;
+            scoreMultiplier -= fastMultiplier;
+            if (scoreMultiplier <= 0)
+            {
+                scoreMultiplier = 1;
+            }
             timer.stop();
             timer.setDelay(speed);
             timer.start();
@@ -164,7 +169,7 @@ public class Snake1 implements ActionListener, KeyListener
                 if (head.equals(cherry))
                 {
                     speed += 2;
-                    score += 10;
+                    score += scoreMultiplier * 10;
                     tailLength+=2;
                     timer.stop();
                     timer.setDelay(speed);
@@ -198,17 +203,28 @@ public class Snake1 implements ActionListener, KeyListener
             if (shorter != null && head.equals(shorter))
             {
               tailLength /=2;
+              score += (tailLength / 4)* scoreMultiplier;
+              if (scoreMultiplier <= 0)
+            {
+                scoreMultiplier = 1;
+            }
               shorter.setLocation(random.nextInt(79), random.nextInt(66));
             }
             
             if (faster != null && head.equals(faster))
             {
                
-               speed = 4;
-               duration = 150;
+               speed = 8;
+               duration = 600;
                timer.stop();
                timer.setDelay(speed);
                timer.start();
+               fastMultiplier = tailLength/30;
+               scoreMultiplier += fastMultiplier;
+               if (scoreMultiplier <= 0)
+            {
+                scoreMultiplier = 1;
+            }
                 
                faster.setLocation(random.nextInt(79),random.nextInt(66));
             }
@@ -216,6 +232,18 @@ public class Snake1 implements ActionListener, KeyListener
             if (reverse != null && head.equals(reverse))
             {
                 reversed = !reversed;
+                if (reversed)
+                {
+                    scoreMultiplier *= 2;
+                }
+                else
+                {
+                    scoreMultiplier /= 2;
+                    if (scoreMultiplier <= 0)
+                    {
+                        scoreMultiplier = 1;
+                    }
+                }
                 reverse.setLocation(random.nextInt(79),random.nextInt(66));
             }
             
