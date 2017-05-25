@@ -33,13 +33,13 @@ public class Snake1 implements ActionListener, KeyListener
 
     public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3, SCALE = 10;
 
-    public int ticks = 0, direction = DOWN, score, scoreMultiplier = 1, fastMultiplier = 1, tailLength = 10, time, duration = 20;
+    public int ticks = 0, direction = DOWN, score, scoreMultiplier = 1, fastMultiplier = 1, tailLength = 10, time, duration = 0;
 
     public Point head, cherry, longer, shorter, faster, reverse;
 
     public Random random;
 
-    public boolean over = false, paused, reversed = false;
+    public boolean over = false, paused, reversed = false, fast = false;
 
     public Dimension dim;
 
@@ -89,7 +89,7 @@ public class Snake1 implements ActionListener, KeyListener
         panel.repaint();
         ticks++;
         duration--;
-        if (duration <= 0)
+        if (duration <= 0 && fast)
         {
             duration = 0;
             speed = 20;
@@ -213,7 +213,7 @@ public class Snake1 implements ActionListener, KeyListener
             
             if (faster != null && head.equals(faster))
             {
-               
+               fast = true;
                speed = 8;
                duration = 600;
                timer.stop();
